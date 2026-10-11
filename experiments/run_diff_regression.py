@@ -115,7 +115,7 @@ def main(run, args):
     sections = set(args.sections)
     summary = {}
 
-    # ---------------------------------------------------------------- 1. single seed
+    # 1. single seed
     if "single" in sections:
         with run.timed("single: Black–Scholes, seed 0"):
             opt, x, y, z, xt = bs_data(seed=0)
@@ -128,7 +128,7 @@ def main(run, args):
                                samples=(opt.basket(x), y), xlim=(0, 225), ylim=(-20, 100))
             run.save_figure(fig, "bachelier3_single_seed")
 
-    # ---------------------------------------------------------------- 2. methods over seeds
+    # 2. methods over seeds
     if "compare" in sections:
         METHODS_EXT = {
             **METHODS,
@@ -157,7 +157,7 @@ def main(run, args):
                                                             "rmse_delta": round(r.rmse_delta_mean, 4)}
                               for r in table.itertuples() if r.method in METHODS}
 
-    # ---------------------------------------------------------------- 3. sensitivity to alpha
+    # 3. sensitivity to alpha
     if "lambda" in sections:
         alphas_diff = [1e-3, 1e-2, 1e-1, 1, 10, 100, 1000]
         alphas_ridge = [1e-4, 1e-3, 1e-2, 1e-1, 1, 10]
@@ -180,7 +180,7 @@ def main(run, args):
         fig.tight_layout()
         run.save_figure(fig, "lambda_sensitivity")
 
-    # ---------------------------------------------------------------- 4. learning curve
+    # 4. learning curve
     if "curve" in sections:
         curve = {}
         for m in SIZES:
@@ -202,7 +202,7 @@ def main(run, args):
         fig.tight_layout()
         run.save_figure(fig, "learning_curve")
 
-    # ---------------------------------------------------------------- 5. dimension
+    # 5. dimension
     if "dimension" in sections:
         dim_res = {}
         for n in DIMS:

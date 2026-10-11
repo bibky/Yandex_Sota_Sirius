@@ -66,7 +66,7 @@ def main(run, args):
     from dml.models.twin_network import Neural_Approximator
     from dml.simulators.lsm import Bachelier, BlackScholes
 
-    # ---------------------------------------------------------------- settings (as in the notebook)
+    # settings (as in the notebook)
     RUN_MODE, SEED, DTYPE = args.mode, args.seed, args.dtype
     DEVICE_NAME = args.device
     N_TEST_RUN, EPOCHS_RUN, SIZES_RUN = N_TEST[RUN_MODE], EPOCHS[RUN_MODE], SIZES[RUN_MODE]
@@ -89,7 +89,7 @@ def main(run, args):
     run.log(f"PyTorch {torch.__version__}; device={device}; dtype={DTYPE}; mode={RUN_MODE}; "
             f"epochs={EPOCHS_RUN}; n_test={N_TEST_RUN}")
 
-    # ---------------------------------------------------------------- experiment (as in the notebook)
+    # experiment (as in the notebook)
     def evaluate_task(task, sizes, task_index):
         gen = BlackScholes() if task == "Black–Scholes" else Bachelier(int(task.split('=')[1]))
         # separate deterministic random stream for every task
@@ -125,7 +125,7 @@ def main(run, args):
     results_df = pd.DataFrame(results)
     run.save_table(results_df, "results")
 
-    # ---------------------------------------------------------------- summary and plot (as in the notebook)
+    # summary and plot (as in the notebook)
     price = results_df.pivot(index=["task", "train_size"], columns="method", values="rmse_price")
     delta = results_df.pivot(index=["task", "train_size"], columns="method", values="rmse_delta")
     gain = pd.DataFrame({"price_gain_x": price["standard"] / price["differential"],

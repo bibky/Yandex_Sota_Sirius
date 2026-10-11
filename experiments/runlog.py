@@ -128,7 +128,7 @@ class RunLogger:
         self.log(f"Experiment: {experiment} | mode: {mode.upper()} — {MODE_NOTES.get(mode, '')}")
         self.log(f"Parameters: {json.dumps(self.manifest['params'], ensure_ascii=False)}")
 
-    # ------------------------------------------------------------------ logging
+    # logging
     def log(self, message: str) -> None:
         self.logger.info(message)
 
@@ -150,7 +150,7 @@ class RunLogger:
             self.log(f"done:  {step} ({seconds:.1f}s)")
             self._write_manifest()
 
-    # ------------------------------------------------------------------ outputs
+    # outputs
     def save_table(self, df, name: str, index: bool = False) -> Path:
         """Save a pandas DataFrame as CSV with a `mode` column in front."""
         df = df.copy()
@@ -176,7 +176,7 @@ class RunLogger:
         self.manifest["summary"].update(_jsonable(items))
         self._write_manifest()
 
-    # ------------------------------------------------------------------ end of run
+    # end of run
     def finish(self, error: BaseException | None = None) -> None:
         self.manifest["status"] = "failed" if error else "ok"
         self.manifest["finished_at"] = datetime.now().isoformat(timespec="seconds")
